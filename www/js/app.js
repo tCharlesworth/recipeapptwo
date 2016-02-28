@@ -43,10 +43,36 @@ angular.module('starter', ['ionic'])
         
         .state('Login', {
             url: '/login',
-            templateUrl: './html/login.html'
+            templateUrl: './html/login.html',
+            controller: 'loginCtrl'
         })
         
     $urlRouterProvider.otherwise('/');
+})
+
+.controller('loginCtrl', function($scope, $ionicPopup) {
+    
+    $scope.localLogin = function(loginInfo) {
+        if(!loginInfo || !loginInfo.username || !loginInfo.password) {
+            // alert("Username and password required");
+            var confirmPopup = $ionicPopup.alert({
+                title: 'Login Error',
+                template: 'Username and password are required'
+            });
+        }
+        //TODO
+    };
+    
+    $scope.googleLogin = function() {
+        var ref = window.open('http://google.com');
+        ref.addEventListener('loadstart', function(event) { 
+            if((event.url).startsWith("http://localhost/callback")) {
+                var requestToken = (event.url).split("code=")[1];
+                ref.close();
+            }
+        });
+    };
+    
 })
 
 .directive('appHeader', function() {
