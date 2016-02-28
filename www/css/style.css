@@ -36,3 +36,45 @@ header {
 .right {
     float: right;
 }
+
+.left {
+    float: left;
+}
+
+.half {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+
+.recipe-container {
+    /*background-color: rgba(61, 60, 60, 0.8);*/
+    /*color: #fff;*/
+    padding: 10px;
+}
+
+.recipe-container hr { 
+    margin: 0 0 25px 0;
+    border: none;
+    height: 2px;
+    width: 80vw;
+    background: linear-gradient(to right, #008517, rgba(0,0,0,0));
+}
+.recipe-container p {
+    margin-left: 20px;
+    
+}
+
+.recipe-container p span {
+    font-size: 20px;
+    margin-right: 5px;
+    color: #008517;
+}
+
+.recipe-container .half {
+    text-align: center;
+}
+
+.recipe-container .half i {
+    color: #008517;
+}
