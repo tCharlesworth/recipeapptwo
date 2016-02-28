@@ -1,4 +1,4 @@
 <div class="recipe-preview-container">
     <h3 ng-click="expanded = !expanded">{{recipe.name || "No Name"}}</h3>
-    <p ui-sref="Recipe" class="no-height" ng-class="{'fullheight': expanded}">This is the description of the recipe.</p>
+    <p ui-sref="Recipe({recipeId: recipe._id})" class="no-height" ng-class="{'fullheight': expanded}">{{recipe.description || "No Description Found"}}</p>
 </div>
