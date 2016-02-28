@@ -34,7 +34,17 @@ angular.module('starter', ['ionic'])
         .state('Recipes', {
             url: '/recipes',
             templateUrl: './html/recipes.html'
-        });
+        })
+        
+        .state('Recipe', {
+            url: '/recipe',
+            templateUrl: './html/recipe.html'
+        })
+        
+        .state('Login', {
+            url: '/login',
+            templateUrl: './html/login.html'
+        })
         
     $urlRouterProvider.otherwise('/');
 })

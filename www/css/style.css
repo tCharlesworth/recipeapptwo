@@ -28,3 +28,11 @@ header {
     height: auto;
     display: block;
 }
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.right {
+    float: right;
+}
