@@ -180,7 +180,8 @@ angular.module('starter', ['ionic'])
             data: authData
         }).then(function (response) {
             //Save Recipes
-            storageService.saveRecipes(response.data.recipes);
+            recipes = response.data.recipes;
+            storageService.saveRecipes(recipes);
             return response.data;
         });
     };
