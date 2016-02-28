@@ -1,0 +1,30 @@
+/* Empty. Add your own CSS if you like */
+
+header {
+    width: 100%;
+    padding: 20px 5px;
+    text-align: center;
+    background: #008517;
+    color: #fff;
+    font-size: 2em;
+    box-sizing: border-box;
+}
+
+.recipe-preview-container {
+    width: 90%;
+    margin: 10px auto;
+    border: thin solid gray;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.no-height {
+    height: 0px;
+    display: none;
+    transition: all 3s ease;
+}
+
+.fullheight {
+    height: auto;
+    display: block;
+}
