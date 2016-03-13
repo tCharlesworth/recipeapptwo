@@ -58,6 +58,12 @@ angular.module('starter', ['ionic'])
             controller: 'loginCtrl'
         })
         
+        .state('LoadData', {
+            url: '/load/:userId',
+            templateUrl: './html/loadData.html',
+            controller: 'loadDataCtrl'
+        })
+        
     $urlRouterProvider.otherwise('/');
 })
 
@@ -79,19 +85,46 @@ angular.module('starter', ['ionic'])
             $state.go('Recipes');
         }).catch(function(err) {
             console.error('Login error', err);
+            var theErr;
+            if(err.data && err.data.message) {
+                // Stuff
+                theErr = 'message=>'+err.data.message
+            } else if(err.statusText) {
+                theErr = 'text=>'+err.statusText;
+            } else {
+                var stuff = '';
+                for(var prop in err) {
+                    stuff+='|'+prop+':'+err[prop];
+                }
+                theErr = stuff;
+            }
             $ionicPopup.alert({
                 title: 'Login Error',
-                template: 'Email or password are incorrect.'
+                // template: 'Email or password are incorrect.'
+                template: 'ERR: '+err.status+':'+theErr
             });
         });
     };
     
     $scope.googleLogin = function() {
-        var ref = window.open('http://google.com');
+        var ref = window.open('http://kitchenFriend.tcharlesworth.com/mobile/googleLogin');
         ref.addEventListener('loadstart', function(event) { 
-            if((event.url).startsWith("http://localhost/callback")) {
+            console.log('NEW URL: ', event.url);
+            if((event.url).startsWith("http://kitchenFriend")) {
                 // var requestToken = (event.url).split("code=")[1];
                 ref.close();
+                console.log("SUCCESS HAS ARIVED!");
+                $ionicPopup.alert({
+                    title: 'Login',
+                    template: 'thanks for logging in!'
+                })
+            } else if ((event.url).startsWith("http://kitchenFriend.tcharlesworth.com/#/login")) {
+                console.log("FAILED");
+                ref.close();
+                $ionicPopup.alert({
+                    title: 'FAILURE',
+                    template: 'You failed your login.'
+                });
             }
         });
     };
@@ -129,6 +162,26 @@ angular.module('starter', ['ionic'])
         scope: {
             recipe: '='
         },
+        link: function(scope, element, attrs) {
+            // var wrap = element.find('div');
+            // wrap.css({
+            //     'background-image': 'url('+scope.recipe.picture+')',
+            //     'background-size': 'cover',
+            //     'background-position': 'center'
+            // })
+            // var container = wrap.find('div');
+            // container.css({
+            //     'background': 'gray',
+            //     'opacity': '0.7'
+            // });
+            // container.find('h3').css({
+            //     'opacity': '2',
+            //     'text-transform': 'uppercase'
+            // });
+            // container.find('p').css({
+            //     'opacity': '2'
+            // });
+        },
         controller: function($scope) {
             $scope.expanded = false;
         }
@@ -157,17 +210,17 @@ angular.module('starter', ['ionic'])
         }
     }
     
-    this.getRecipesFromServer = function() {
+    this.getRecipesFromServer = function(uid) {
         // get the users id
-        var userId = '3';
         // go to the server
         return $http({
             method: 'GET',
-            url: CONSTANTS.serverUrl + '/mobile/recipes/' + userId
+            url: CONSTANTS.serverUrl + '/mobile/recipes/' + (uid || userId)
         }).then(function (response) {
             console.log('Got Response From Server: ', response);
             // Save to local storage
-            // storageService.saveRecipes(response.data);
+            // debugger;
+            storageService.saveRecipes(response.data.recipes);
             return response;
         });
     };
@@ -181,6 +234,7 @@ angular.module('starter', ['ionic'])
         }).then(function (response) {
             //Save Recipes
             recipes = response.data.recipes;
+            console.log('recipes: ', recipes);
             storageService.saveRecipes(recipes);
             return response.data;
         });
@@ -200,4 +254,19 @@ angular.module('starter', ['ionic'])
         }
         return data;
     };
+})
+
+.controller('loadDataCtrl', function($scope, $state, $stateParams, dataService) {
+    if($stateParams.userId) {
+        dataService.getRecipesFromServer($stateParams.userId).then(function(){
+            console.log('recipes loaded');
+            $state.go('Recipes');
+        }).catch(function(err) {
+            $ionicPopup.alert('BROKE: ', err);
+            $state.go('Login');
+        });
+    } else {
+        $ionicPopup.alert('Not Working');
+        $state.go('Login');
+    }
 })

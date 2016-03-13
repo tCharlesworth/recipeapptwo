@@ -1,6 +1,9 @@
 <ion-content>
     <app-header title="Recipe"></app-header>
     <div class="recipe-container">
+        <div class="list card item">
+            <img class="recipe-image" ng-src="{{recipe.picture}}" />
+        </div>
         <h1>{{recipe.name || "No Name"}}</h1>
         <p>{{recipe.description}}</p>
         <div class="left half">
@@ -13,10 +16,14 @@
         </div>
         <h3>Ingredients</h3>
         <hr/>
-        <p ng-repeat="ingredient in recipe.ingredients"><span>-</span>{{ingredient}}</p>
+        <p ng-repeat="ingredient in recipe.ingredients">
+            <span>-</span>{{ingredient}}
+        </p>
         <h3>Directions</h3>
         <hr/>
-        <p ng-repeat="direction in recipe.directions"><span>{{$index + 1}}</span>{{direction}}</p>
+        <p ng-repeat="direction in recipe.directions">
+            <span>{{$index + 1}}</span>{{direction}}
+        </p>
         <div class="stretch"></div>
     </div>
 </ion-content>

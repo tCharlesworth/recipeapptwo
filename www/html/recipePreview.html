@@ -1,4 +1,25 @@
-<div class="recipe-preview-container">
-    <h3 ng-click="expanded = !expanded">{{recipe.name || "No Name"}}</h3>
-    <p ui-sref="Recipe({recipeId: recipe._id})" class="no-height" ng-class="{'fullheight': expanded}">{{recipe.description || "No Description Found"}}</p>
+<!--<div class="recipe-preview-wrapper">
+    <div class="recipe-preview-container">
+        <h3 ng-click="expanded = !expanded">{{recipe.name || "No Name"}}</h3>
+        <div ui-sref="Recipe({recipeId: recipe._id})" class="no-height" ng-class="{'fullheight': expanded}">
+            <p>{{recipe.description || "No Description Found"}}</p>
+            <div>
+                <i class="ion-trash-a"></i>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div class="list card">
+    <div class="item item-body" ui-sref="Recipe({'recipeId': recipe._id})">
+        <img class="full-image" ng-src="{{recipe.picture}}">
+        <h3>{{recipe.name || 'No Name'}}</h3>
+        <p>
+        {{recipe.description}}
+        </p>
+        <!--<p>
+            <a href="#" class="subdued">Open</a>
+            <a href="#" class="subdued">5 Comments</a>
+        </p>-->
+    </div>
 </div>

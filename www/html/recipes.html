@@ -1,4 +1,8 @@
 <ion-content>
     <app-header title="Recipes"></app-header>
     <recipe-preview ng-repeat="recipe in recipes" recipe="recipe"></recipe-preview>
+    <div ng-if="!recipes">
+        <p class="page-message">No Recipes Found.</p>
+        <button class="button button-block" ui-sref="Login">Go Login</button>
+    </div>
 </ion-content>
